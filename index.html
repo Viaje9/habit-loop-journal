@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f8f6ee" />
+    <title>習慣迴圈紀錄</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="app-screen is-review" aria-label="習慣迴圈紀錄工具">
+        <header class="app-header">
+          <button class="back-button" id="backButton" type="button" hidden>返回</button>
+          <div class="title-block">
+            <p id="screenEyebrow">Loop Journal</p>
+            <h1 id="screenTitle">習慣迴圈</h1>
+          </div>
+          <button class="text-link" id="newEntryButton" type="button">新增</button>
+        </header>
+
+        <section class="view" id="recordView" aria-label="新增紀錄">
+          <form class="loop-form" id="loopForm">
+            <label class="loop-field">
+              <span class="field-number">01</span>
+              <span class="field-title">觸發點</span>
+              <textarea
+                id="triggerInput"
+                placeholder="發生了什麼？"
+                rows="3"
+              ></textarea>
+            </label>
+
+            <label class="loop-field">
+              <span class="field-number">02</span>
+              <span class="field-title">行為</span>
+              <textarea
+                id="behaviorInput"
+                placeholder="我怎麼反應？"
+                rows="3"
+              ></textarea>
+            </label>
+
+            <label class="loop-field">
+              <span class="field-number">03</span>
+              <span class="field-title">結果</span>
+              <textarea
+                id="resultInput"
+                placeholder="留下什麼感受？"
+                rows="3"
+              ></textarea>
+            </label>
+
+            <div class="actions">
+              <button class="primary-button" id="submitButton" type="submit" disabled>
+                加入紀錄
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class="view is-active" id="reviewView" aria-label="回顧紀錄">
+          <div class="review-tools">
+            <label class="search-field">
+              <input id="searchInput" type="search" placeholder="搜尋觸發點、行為、結果" />
+            </label>
+            <p id="reviewCount">0 筆紀錄</p>
+          </div>
+
+          <div class="entry-list" id="entryList"></div>
+        </section>
+
+        <div class="modal-backdrop" id="deleteDialog" hidden>
+          <section class="confirm-sheet" role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
+            <h2 id="deleteTitle">刪除這筆紀錄？</h2>
+            <p id="deleteSummary">刪除後無法復原。</p>
+            <div class="confirm-actions">
+              <button class="danger-button" id="confirmDeleteButton" type="button">刪除</button>
+              <button class="cancel-button" id="cancelDeleteButton" type="button">取消</button>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+    <script src="./src/app.js"></script>
+  </body>
+</html>
