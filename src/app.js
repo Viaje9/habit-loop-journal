@@ -1,15 +1,5 @@
 const STORAGE_KEY = "habit-loop-journal.entries";
 
-const starterEntries = [
-  {
-    id: "sample-1",
-    trigger: "妻子用某種方式說話",
-    behavior: "擔心會演變成衝突",
-    result: "焦慮",
-    createdAt: "今天",
-  },
-];
-
 const fields = {
   trigger: document.querySelector("#triggerInput"),
   behavior: document.querySelector("#behaviorInput"),
@@ -165,7 +155,6 @@ function switchView(viewName) {
   appScreen.classList.toggle("is-record", activeView === "record");
   appScreen.classList.toggle("is-review", activeView === "review");
   backButton.hidden = activeView !== "record";
-  newEntryButton.hidden = activeView !== "review";
   document.querySelector(".title-block").hidden = false;
   screenEyebrow.textContent = activeView === "record" ? "New loop" : "Loop Journal";
   screenTitle.textContent = activeView === "record" ? "新增迴圈" : "習慣迴圈";
@@ -209,9 +198,9 @@ function clearDraft() {
 function loadEntries() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : starterEntries;
+    return saved ? JSON.parse(saved) : [];
   } catch {
-    return starterEntries;
+    return [];
   }
 }
 
