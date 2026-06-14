@@ -8,7 +8,7 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png" />
     <title>習慣迴圈紀錄</title>
-    <link rel="stylesheet" href="./src/styles.css" />
+    <link rel="stylesheet" href="./src/styles.css?v=20260614-export" />
   </head>
   <body>
     <main class="app-shell">
@@ -67,7 +67,10 @@
             <label class="search-field">
               <input id="searchInput" type="search" placeholder="搜尋觸發點、行為、結果" />
             </label>
-            <p id="reviewCount">0 筆紀錄</p>
+            <div class="data-row">
+              <p id="reviewCount">0 筆紀錄</p>
+              <button class="export-button" id="exportButton" type="button" disabled>匯出 JSON</button>
+            </div>
           </div>
 
           <div class="entry-list" id="entryList"></div>
@@ -85,6 +88,6 @@
         </div>
       </section>
     </main>
-    <script src="./src/app.js"></script>
+    <script src="./src/app.js?v=20260614-export"></script>
   </body>
 </html>

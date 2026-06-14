@@ -23,6 +23,7 @@ const backButton = document.querySelector("#backButton");
 const entryList = document.querySelector("#entryList");
 const searchInput = document.querySelector("#searchInput");
 const reviewCount = document.querySelector("#reviewCount");
+const exportButton = document.querySelector("#exportButton");
 const deleteDialog = document.querySelector("#deleteDialog");
 const deleteSummary = document.querySelector("#deleteSummary");
 const confirmDeleteButton = document.querySelector("#confirmDeleteButton");
@@ -98,6 +99,8 @@ backButton.addEventListener("click", () => {
 });
 
 searchInput.addEventListener("input", render);
+
+exportButton.addEventListener("click", exportEntries);
 
 cancelDeleteButton.addEventListener("click", closeDeleteDialog);
 
@@ -216,6 +219,31 @@ function saveEntries() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
 }
 
+function exportEntries() {
+  if (entries.length === 0) return;
+
+  const exportedAt = new Date();
+  const payload = {
+    app: "habit-loop-journal",
+    version: 1,
+    exportedAt: exportedAt.toISOString(),
+    entries,
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {
+    type: "application/json",
+  });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  const dateStamp = exportedAt.toISOString().slice(0, 10);
+
+  link.href = url;
+  link.download = `habit-loop-journal-${dateStamp}.json`;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
 function formatDate() {
   return new Intl.DateTimeFormat("zh-TW", {
     month: "2-digit",
@@ -241,6 +269,7 @@ function render() {
   reviewCount.textContent = keyword
     ? `${filteredEntries.length} / ${entries.length} 筆`
     : `${entries.length} 筆紀錄`;
+  exportButton.disabled = entries.length === 0;
 
   if (entries.length === 0) {
     entryList.innerHTML = `
