@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  static-checks:
+    name: Static checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check JavaScript syntax
+        run: node --check src/app.js
+
+      - name: Check required static files
+        run: |
+          test -f index.html
+          test -f src/app.js
+          test -f src/styles.css
+          test -f manifest.webmanifest
+          test -f assets/icons/icon-192.png
+          test -f assets/icons/icon-512.png
+          test -f assets/icons/apple-touch-icon.png
+
+      - name: Check HTML references
+        run: |
+          grep -q './src/styles.css' index.html
+          grep -q './src/app.js' index.html
+          grep -q './manifest.webmanifest' index.html
+          grep -q './assets/icons/apple-touch-icon.png' index.html
+
+      - name: Check manifest references
+        run: |
+          grep -q './assets/icons/icon-192.png' manifest.webmanifest
+          grep -q './assets/icons/icon-512.png' manifest.webmanifest
+          grep -q '"display": "standalone"' manifest.webmanifest
